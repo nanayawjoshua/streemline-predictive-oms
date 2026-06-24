@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-prediction-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and push prediction engine
+        run: |
+          docker build -t streemline/predictive-oms:latest ./prediction-engine
+          echo "Push to container registry here when configured"
+
+  deploy-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy dashboard
+        run: |
+          tar czf dashboard.tar.gz -C dashboard .
+          echo "Upload to static hosting when configured"
